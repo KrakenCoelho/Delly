@@ -42,6 +42,11 @@ public class Cliente {
 	@Column
 	private String estado;
 	
+	
+	@Column
+	private String selecinadoparceiro;
+	
+	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date data_sub;
@@ -53,7 +58,7 @@ public class Cliente {
 	   public Cliente() {
 	   }
 
-	   public Cliente(Long id, String nome, String mensagem, String descricao, String email, String palavrapasse, String logomarca, String telefone, String rep_code, String fundo, String estado, Date data_sub, int prim) {
+	   public Cliente(Long id,String selecinadoparceiro, String nome, String mensagem, String descricao, String email, String palavrapasse, String logomarca, String telefone, String rep_code, String fundo, String estado, Date data_sub, int prim) {
 	      this.id = id;
 	      this.nome = nome;
 	      this.mensagem = mensagem;
@@ -67,6 +72,7 @@ public class Cliente {
 	      this.estado = estado;
 	      this.data_sub = data_sub;
 	      this.prim = prim;
+	      this.selecinadoparceiro = selecinadoparceiro;
 	   }
 
 	   public Long getId() {
@@ -172,8 +178,28 @@ public class Cliente {
 	   public void setPrim(int prim) {
 	      this.prim = prim;
 	   }
+	   
+	 
+	   public String getSelecinadoparceiro() {
+		return selecinadoparceiro;
+	}
 
-	   public String toString() {
-	      return "Cliente [id=" + this.id + ", nome=" + this.nome + ", mensagem=" + this.mensagem + ", descricao=" + this.descricao + ", email=" + this.email + ", palavrapasse=" + this.palavrapasse + ", logomarca=" + this.logomarca + ", telefone=" + this.telefone + ", rep_code=" + this.rep_code + ", fundo=" + this.fundo + ", estado=" + this.estado + ", data_sub=" + this.data_sub + ", prim=" + this.prim + "]";
-	   }
+	public void setSelecinadoParceiro(String selecinadoparceiro) {
+		this.selecinadoparceiro = selecinadoparceiro;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nome=" + nome + ", mensagem=" + mensagem + ", descricao=" + descricao
+				+ ", email=" + email + ", palavrapasse=" + palavrapasse + ", logomarca=" + logomarca + ", telefone="
+				+ telefone + ", rep_code=" + rep_code + ", fundo=" + fundo + ", estado=" + estado
+				+ ", selecinadoParceiro=" + selecinadoparceiro + ", data_sub=" + data_sub + ", prim=" + prim + "]";
+	}
+
+	
+	
+	
+	
+	
+	
 	}

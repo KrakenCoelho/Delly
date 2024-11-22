@@ -231,6 +231,11 @@ nav1 {
               <div class="date">Data:</div>
               <div class="date dark"  th:text="${#dates.format(r[4], 'dd/MM/yyyy')}" >Quarta-feira, 12 Maio 2021</div>
             </div>
+            <div class="text-reclamacao"   th:onclick="javascript:Edvania(this.getAttribute('data-id'))" th:attr="data-id=${r[0]}">
+             <input th:if="${r[5]}=='1'" checked type="checkbox" th:id="'sp'+${r[0]}" name="checkbox" data-name="Checkbox" class="w-checkbox-input">
+             <input th:if="${r[5]}!='1'"  type="checkbox" th:id="'sp'+${r[0]}" name="checkbox" data-name="Checkbox" class="w-checkbox-input">
+          <span class="date dark" for="checkbox" style="color:black" >Exibir na Landing page</span></label>
+           </div>
           </div>
           <div  th:id="'luca'+${r[0]}" style="display:none;" >
           <div>
@@ -326,6 +331,27 @@ nav1 {
     // NICE!!!!!!!!
   });
   
+  function Edvania(param){
+	 // alert(param);
+	  
+	//  window.location.href="/setparceiro/"+param;
+	  
+	 const checkbox = document.getElementById("sp"+param);
+    if (checkbox) {
+        if (checkbox.checked) {
+        	$.post("/setparce/"+window.btoa(param)+"/"+1);
+            //alert("O checkbox está marcado (checked).");
+        } else {
+        	$.post("/setparce/"+window.btoa(param)+"/"+0);
+            //alert("O checkbox está desmarcado (unchecked).");
+        }
+    } else {
+        alert("ERROR POR FAVOR TENTE NOVAMENTE");
+    }
+	
+	  //
+	  
+  }
   
   function dias(param){
 	   //alert(param)
@@ -399,6 +425,11 @@ nav1 {
             				 '<div class="text-reclamacao">'+
               				 '<div class="date">Data:</div>'+
                              '<div class="date dark"  >'+dataFormatada+'</div>'+
+                             '</div>'+
+                             '<div class="text-reclamacao"   onclick="Edvania('+cliente.id+')" >'+
+                             (cliente.selecinadoparceiro==='1'?'<input  checked type="checkbox" id="sp'+cliente.id+'" name="checkbox" data-name="Checkbox" class="w-checkbox-input">':'')+
+                             (cliente.selecinadoparceiro!='1' ?'<input   type="checkbox" id="sp'+cliente.id+'" name="checkbox" data-name="Checkbox" class="w-checkbox-input">':'')+
+                             '<span class="date dark" for="checkbox" style="color:black" >Exibir na Landing page</span></label>'+
                              '</div>'+
                              '</div>'+
                            //  '<form action="/val/'+re+'" id="luca'+cliente.id+'" style="display:none;" method="POST" >'

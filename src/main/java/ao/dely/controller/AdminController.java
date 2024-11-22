@@ -34,6 +34,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -457,4 +458,30 @@ public class AdminController {
      workbook.write(response.getOutputStream());
      workbook.close();
  }
+ 
+ 
+ @PostMapping("/setparce/{id}/{sp}")
+ public void SetParceiro(@PathVariable("id") String estado,@PathVariable("sp") String sp , HttpServletRequest request, HttpServletResponse response) throws IOException {
+	  HttpSession session = request.getSession(false);
+      boolean control = false;
+	Long id=anexo.Decodifica(estado);
+	
+	//System.out.println(sp+" | "+estado );
+	 
+	  if (session != null) {
+	         for(Iterator var6 = this.adminRepository.verify(session.getAttribute("telefone"), session.getAttribute("palavrapasse")).iterator(); var6.hasNext(); control = true) {
+	            Admin adm = (Admin)var6.next();
+	            
+	            System.out.println(sp+" | "+estado );
+	            clienteRepository.sp(sp, id);
+  }   
+	      }
+
+	
+	
+	
+ }
+ 
+ 
+ 
 }

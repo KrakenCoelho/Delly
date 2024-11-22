@@ -32,7 +32,7 @@ public interface ClienteRepository  extends JpaRepository<Cliente,Long>  {
 	@Query(value = "SELECT data_sub  FROM cliente WHERE id=? ", nativeQuery = true)
 	LocalDate data_sub(Long id);
 	
-	@Query(value = "SELECT id,nome,telefone,estado,data_sub FROM cliente ORDER BY nome ASC ", nativeQuery = true)
+	@Query(value = "SELECT id,nome,telefone,estado,data_sub,selecinadoparceiro FROM cliente ORDER BY nome ASC ", nativeQuery = true)
 	List<List> cag(Pageable pageable,String sortField, String sortDirection);
 	
 	
@@ -181,7 +181,7 @@ public interface ClienteRepository  extends JpaRepository<Cliente,Long>  {
 		   
 		   
 		   
-		   @Query(value = "SELECT id,fundo,logomarca,nome,`data_sub` FROM `cliente` WHERE estado='Pago' ORDER BY `cliente`.`data_sub` DESC LIMIT 28 ", nativeQuery = true )
+		   @Query(value = "SELECT id,fundo,logomarca,nome,`data_sub` FROM `cliente` WHERE estado='Pago' AND selecinadoparceiro='1' ORDER BY `cliente`.`data_sub` DESC LIMIT 28 ", nativeQuery = true )
 		   List<List> parceiros();
 		   
 
@@ -198,7 +198,16 @@ public interface ClienteRepository  extends JpaRepository<Cliente,Long>  {
 		      nativeQuery = true
 		   )
 		   int pagamentocliente(String estatuto, Date data, Long id_c);
-
+		   
+		   @Transactional
+		   @Modifying
+		   @Query(
+		      value = "UPDATE cliente SET selecinadoparceiro=? WHERE id=?",
+		      nativeQuery = true
+		   )
+		   int sp(String sp, Long id_c);
+		   
+		   
 		   @Query(
 		      value = "SELECT telefone FROM cliente WHERE id=?",
 		      nativeQuery = true

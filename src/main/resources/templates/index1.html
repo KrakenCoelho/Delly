@@ -56,64 +56,20 @@
 <!--     </div> -->
 <!--     <div class="shadow"></div> -->
 <!--   </section> -->
-  <section id="INICIO" class="hero">
-    <div class="container">
-      <div>
-        <div class="w-layout-grid grid">
-          <div id="w-node-_8f3106bb-f96e-b9ba-f8d7-40a19caad5a3-7dba3608" class="div-block-4">
-            <h1 class="heading"><strong class="bold-text">Alcance 10.000 visitas únicas diarias com o Delly</strong></h1>
-            <p class="paragraph">O Delly é o menu inteligente acessível através de QR Code que já conquistou mais de 200 restaurantes e salões de beleza. Dê visibilidade à sua marca e atraia novos clientes com as visualizações exclusivas e obrigatórias que o Menu Delly proporciona. Seja visto por quem realmente importa!<br></p>
-            <div class="div-block-5">
-              <div class="div-block-6">
-                <a href="https://app.qrcode-delly.com/cliente/autenticacao/nova-conta-cliente" class="button w-button">Ligue agora!</a>
-              </div>
-            </div>
-          </div>
-          <div id="w-node-_8f3106bb-f96e-b9ba-f8d7-40a19caad5b2-7dba3608" class="div-block-3"></div>
-        </div>
-      </div>
-    </div>
-  </section>
+
   <section id="Parceiro" class="vitrine-pub">
-    <div class="container">
-      <h1 class="heading-4">Parceiros e Clientes</h1>
+   
       <div class="w-layout-grid grid-card">
-        <a th:each="p:${parceiros}"  th:with="id=${T(ao.dely.controller.ArquivoUploadController).Codifica(p[0])}" th:href="'https://app.qrcode-delly.com/cliente/menu/menu/'+${id}"  id="w-node-e0ca942f-fff3-dfc7-a149-5f90a787702c-7dba3608" th:style="'background-image: url('+@{${'/upload/cliente/' + p[1]}}+')'"  data-w-id="e0ca942f-fff3-dfc7-a149-5f90a787702c" class="card-menu">
+        <a th:each="p:${parceiros}" target="blank" th:with="id=${T(ao.dely.controller.ArquivoUploadController).Codifica(p[0])}" th:href="'https://app.qrcode-delly.com/cliente/menu/menu/'+${id}"  id="w-node-e0ca942f-fff3-dfc7-a149-5f90a787702c-7dba3608" th:style="'background-image: url('+@{${'/upload/cliente/' + p[1]}}+')'"  data-w-id="e0ca942f-fff3-dfc7-a149-5f90a787702c" class="card-menu w-inline-block">
           <div   style="-webkit-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="card-image">
           <img th:src="@{${'/upload/cliente/' + p[2]}}" loading="lazy" sizes="125px"  alt="" class="image-6"></div>
           <div style="opacity:0" class="text-block-7">[[${p[3]}]]</div>
         </a>
       
       </div>
-    </div>
+    
   </section>
-  <section id="EXEMPLOS" class="section">
-    <div class="container">
-      <div>
-        <h1 class="heading-4">QR Code exemplos</h1>
-      </div>
-      <div>
-        <div class="w-layout-grid grid-7">
-          <a id="w-node-_6fc46885-3dde-f3af-8f19-b327c4361ad1-7dba3608" href="https://app.qrcode-delly.com/cliente/menu/menu/NjI=" class="link-block w-inline-block">
-            <div class="text-block-2">Restaurante</div><img src="images/frame-43.png" loading="lazy" alt="" class="image-2">
-            <div class="text-block-7">Escaneie ou Clique para ver</div>
-          </a>
-          <a id="w-node-_18e9dd1f-6dd0-0e23-1b52-7a334f7e4542-7dba3608" href="https://app.qrcode-delly.com/cliente/menu/menu/NDE=" class="link-block w-inline-block">
-            <div class="text-block-2">Ginásio</div><img src="images/frame-44.png" loading="lazy" alt="" class="image-2">
-            <div class="text-block-7">Escaneie ou Clique para ver</div>
-          </a>
-          <a id="w-node-ece577d4-1fbb-ed57-5058-81060a57d811-7dba3608" href="https://app.qrcode-delly.com/cliente/menu/menu/MTY=" class="link-block w-inline-block">
-            <div class="text-block-2">Salão de Beleza</div><img src="images/frame-45.png" loading="lazy" alt="" class="image-2">
-            <div class="text-block-7">Escaneie ou Clique para ver</div>
-          </a>
-          <a id="w-node-_974fc90a-cf4d-e690-c73e-027410661c24-7dba3608" href="https://app.qrcode-delly.com/cliente/menu/menu/Nzk=" class="link-block w-inline-block">
-            <div class="text-block-2">Serviços</div><img src="images/frame-46.png" loading="lazy" alt="" class="image-2">
-            <div class="text-block-7">Escaneie ou Clique para ver</div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+ 
 <!--   <section class="footer"> -->
 <!--     <div class="contain"> -->
 <!--       <div class="w-layout-grid grid-6"> -->
