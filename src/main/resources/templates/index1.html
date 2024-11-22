@@ -58,9 +58,9 @@
 <!--   </section> -->
 
   <section id="Parceiro" class="vitrine-pub">
-   
+  
       <div class="w-layout-grid grid-card">
-        <a th:each="p:${parceiros}" target="blank" th:with="id=${T(ao.dely.controller.ArquivoUploadController).Codifica(p[0])}" th:href="'https://app.qrcode-delly.com/cliente/menu/menu/'+${id}"  id="w-node-e0ca942f-fff3-dfc7-a149-5f90a787702c-7dba3608" th:style="'background-image: url('+@{${'/upload/cliente/' + p[1]}}+')'"  data-w-id="e0ca942f-fff3-dfc7-a149-5f90a787702c" class="card-menu w-inline-block">
+        <a th:each="p:${parceiros}" target="blank" th:with="id=${T(ao.dely.controller.ArquivoUploadController).Codifica(p[0])}" th:href="'https://app.qrcode-delly.com/cliente/menu/menu/'+${id}"  id="w-node-e0ca942f-fff3-dfc7-a149-5f90a787702c-7dba3608" th:style="'background-image: url('+@{${'/upload/cliente/' + p[1]}}+'); background-size: cover; background-position: center;'"  data-w-id="e0ca942f-fff3-dfc7-a149-5f90a787702c" class="card-menu w-inline-block">
           <div   style="-webkit-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="card-image">
           <img th:src="@{${'/upload/cliente/' + p[2]}}" loading="lazy" sizes="125px"  alt="" class="image-6"></div>
           <div style="opacity:0" class="text-block-7">[[${p[3]}]]</div>
