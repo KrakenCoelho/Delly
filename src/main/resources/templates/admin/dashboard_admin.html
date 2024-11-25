@@ -194,6 +194,15 @@ nav1 {
           <div class="form-block-3 w-form">
             <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-2" data-wf-page-id="653f686889f872ddead9b51c" data-wf-element-id="c45fbe29-e9c7-fa32-88e8-6a7470af9920">
               <div class="filters-flex">
+              
+              
+                <select id="exibido" name="field-2" data-name="Field 2" class="select-field w-select" onchange="filtro()">
+                  <option value="">Landing Page</option>
+                  <option value="1" >Exibidos</option>
+                  
+                </select>
+                
+              
               <select id="estado" name="field-2" data-name="Field 2" class="select-field w-select" onchange="filtro()">
                   <option value="">Estado</option>
                   <option value="Pago" >Pago</option>
@@ -327,7 +336,7 @@ nav1 {
       	// click our .form-success-trigger
         // this class has an Interaction on it that runs our Lottie icon animation
       	$('.form-success-trigger').click();
-    },2000);
+    },20000);
     // NICE!!!!!!!!
   });
   
@@ -389,7 +398,7 @@ nav1 {
 	
 	
 	var search = document.getElementById("search").value
-	
+	var exibidos = document.getElementById("exibido").value
 	var estado = document.getElementById("estado").value
 
 	
@@ -398,7 +407,7 @@ nav1 {
 	 $.ajax({
      type: "POST",
      url: url,
-     data: {'search':search,'estado':estado},
+     data: {'search':search,'exibidos':exibidos,'estado':estado},
      success: function(data){
   	   
   	   		if(data.length>0){

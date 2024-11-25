@@ -94,10 +94,18 @@ public interface ClienteRepository  extends JpaRepository<Cliente,Long>  {
 		   
 		   
 		   @Query(
-				      value = "SELECT * FROM cliente WHERE estado=:estado AND (nome LIKE %:search%  OR telefone LIKE %:search%) LIMIT 15",
+				      value = "SELECT * FROM cliente WHERE estado=:estado AND selecinadoparceiro=:exibido  AND (nome LIKE %:search%  OR telefone LIKE %:search%)  LIMIT 15",
 				      nativeQuery = true
 				   )
-				   Iterable<Cliente> proce(@Param("search") String search,@Param("estado") String estado);
+				   Iterable<Cliente> proce(@Param("search") String search,@Param("estado") String estado,@Param("exibido") String exibido);
+		   
+		   @Query(
+				      value = "SELECT * FROM cliente WHERE estado=:estado AND selecinadoparceiro=:exibido LIMIT 15",
+				      nativeQuery = true
+				   )
+				   Iterable<Cliente> procex(@Param("estado") String estado,@Param("exibido") String exibido);
+		   
+		   
 		   
 		   @Query(
 				      value = "SELECT * FROM cliente WHERE estado=:estado ",
@@ -105,7 +113,11 @@ public interface ClienteRepository  extends JpaRepository<Cliente,Long>  {
 				   )
 				   Iterable<Cliente> proe(@Param("estado") String estado);
 		   
-		   
+		   @Query(
+				      value = "SELECT * FROM cliente WHERE selecinadoparceiro=:exibido ",
+				      nativeQuery = true
+				   )
+				   Iterable<Cliente> proex(@Param("exibido") String exibido);
 		   
 		   @Query(value = "SELECT COUNT(*) FROM cliente",nativeQuery = true)
 	       int contagem();

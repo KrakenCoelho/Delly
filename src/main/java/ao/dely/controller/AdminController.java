@@ -143,14 +143,18 @@ public class AdminController {
 	
 	@RequestMapping(value={"/clientesprocurar/"}, method={RequestMethod.POST})
     @ResponseBody
-    public Iterable<Cliente> cliente(Model model,  @Valid String search,@Valid String estado, HttpServletRequest request) {
-        if ( search != "" & estado=="" ) {
+    public Iterable<Cliente> cliente(Model model,  @Valid String search,@Valid String estado,@Valid String exibidos, HttpServletRequest request) {
+        if ( search != "" & estado=="" & exibidos=="") {
             return clienteRepository.proc( search);
-        } if ( search != "" & estado!="" ) {
-            return clienteRepository.proce( search,estado);
-        } if ( search == "" & estado!="" ) {
+        } if ( search != "" & estado!="" & exibidos!="" ) {
+            return clienteRepository.proce( search,estado,exibidos);
+        } if ( search == "" & estado!="" & exibidos=="" ) {
             return clienteRepository.proe( estado);
-        }
+        } if ( search == "" & estado=="" & exibidos!="" ) {
+            return clienteRepository.proex( exibidos);
+        }if ( search == "" & estado!="" & exibidos!="" ) {
+            return clienteRepository.procex( estado,exibidos);
+        } 
         
         return clienteRepository.vertodos();
     }
