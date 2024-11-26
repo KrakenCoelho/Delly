@@ -112,17 +112,17 @@ public class ClienteController {
     }
 	
 	
+
+	
 	
 	@GetMapping(value={"/parceirossection"})
-    public String Parceirossection(Model model, HttpServletRequest request) throws ParseException {
+    public String Parceirossection1(Model model, HttpServletRequest request) throws ParseException {
 		
 		
 		 model.addAttribute("parceiros",clienteRepository.parceiros());
 		
-        return "/index1";
+        return "/index3";
     }
-	
-	
 	
 	
     @PostMapping(value={"/checknumero"})
