@@ -336,9 +336,40 @@ nav1 {
       	// click our .form-success-trigger
         // this class has an Interaction on it that runs our Lottie icon animation
       	$('.form-success-trigger').click();
-    },20000);
+    },
+       
+    20000
+    
+    
+  	
+  	);
     // NICE!!!!!!!!
   });
+  
+  
+//   let timerInterval;
+//   Swal.fire({
+//     title: "Auto close alert!",
+//     html: "I will close in <b></b> milliseconds.",
+//     timer: 20000,
+//     timerProgressBar: true,
+//     didOpen: () => {
+//       Swal.showLoading();
+//       const timer = Swal.getPopup().querySelector("b");
+//       timerInterval = setInterval(() => {
+//         timer.textContent = `${Swal.getTimerLeft()}`;
+//       }, 20100);
+//     },
+//     willClose: () => {
+//       clearInterval(timerInterval);
+//     }
+//   }).then((result) => {
+//     /* Read more about handling dismissals below */
+//     if (result.dismiss === Swal.DismissReason.timer) {
+//       console.log("I was closed by the timer");
+//     }
+//   });
+  
   
   function Edvania(param){
 	 // alert(param);
