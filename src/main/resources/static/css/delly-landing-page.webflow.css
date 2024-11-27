@@ -295,10 +295,6 @@ body {
   color: #2f6cc3;
 }
 
-.heading-4._1 {
-  margin-bottom: 0;
-}
-
 .grid-7 {
   grid-template-rows: auto;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -755,7 +751,6 @@ body {
   .grid-card {
     grid-template-rows: auto auto auto auto;
     grid-template-columns: 1fr;
-    display: none;
   }
 
   .code-embed-2 {
