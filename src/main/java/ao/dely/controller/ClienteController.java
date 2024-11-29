@@ -1056,13 +1056,13 @@ public class ClienteController {
     }
 
     @Scheduled(cron="0 0 0 * * *")
-    //@GetMapping("/act")
+    @GetMapping("/act")
     public void salvarestado() throws ParseException {
-        for (Cliente cliente : this.clienteRepository.vertodos()) {
+        for (Cliente cliente : this.clienteRepository.vertodos12()) {
             if (this.clienteRepository.diasrestantes(cliente.getId()) > 0) {
                 cliente.setEstado("Pago");
             } else if (this.clienteRepository.diasrestantes(cliente.getId()) <= 0) {
-                cliente.setEstado("N\u00e3o pago");
+                cliente.setEstado("Não pago");
             }
             this.clienteRepository.save(cliente);
         }

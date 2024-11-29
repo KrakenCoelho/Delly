@@ -87,6 +87,12 @@ public interface ClienteRepository  extends JpaRepository<Cliente,Long>  {
 		   Iterable<Cliente> vertodos();
 		   
 		   @Query(
+				      value = "SELECT * FROM cliente ORDER BY nome ASC ",
+				      nativeQuery = true
+				   )
+				   Iterable<Cliente> vertodos12();
+		   
+		   @Query(
 				      value = "SELECT * FROM cliente WHERE nome LIKE %:search%  OR telefone LIKE %:search% LIMIT 15 ",
 				      nativeQuery = true
 				   )
