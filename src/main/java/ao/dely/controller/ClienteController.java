@@ -212,7 +212,7 @@ public class ClienteController {
                 model.addAttribute("id", (Object)ArquivoUploadController.Codifica(cliente.getId()));
                 control = true;
                 if (!control) continue;
-                r = this.clienteRepository.diasrestantes(cliente.getId()) <= 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/dashboard";
+                r = this.clienteRepository.diasrestantes(cliente.getId()) < 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/dashboard";
             }
         } else {
             r = "redirect:/index";
@@ -274,7 +274,7 @@ public class ClienteController {
                 model.addAttribute("id", (Object)ArquivoUploadController.Codifica(cliente.getId()));
                 control = true;
                 if (!control) continue;
-                r = this.clienteRepository.diasrestantes(cliente.getId()) <= 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/definicoes-gerais/meu-qr-code";
+                r = this.clienteRepository.diasrestantes(cliente.getId()) < 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/definicoes-gerais/meu-qr-code";
             }
         } else {
             r = "redirect:/index";
@@ -371,7 +371,7 @@ public class ClienteController {
                 model.addAttribute("subcategorias", this.subcatRepository.subes(cliente.getId()));
                 control = true;
                 if (!control) continue;
-                r = this.clienteRepository.diasrestantes(cliente.getId()) <= 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/artigos/artigos-main";
+                r = this.clienteRepository.diasrestantes(cliente.getId()) < 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/artigos/artigos-main";
             }
         } else {
             r = "redirect:/index";
@@ -560,7 +560,7 @@ public class ClienteController {
                 model.addAttribute("categorias", this.categoriaRepository.categoriaesp(cliente.getId()));
                 control = true;
                 if (!control) continue;
-                r = this.clienteRepository.diasrestantes(cliente.getId()) <= 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/categorias/categorias-main";
+                r = this.clienteRepository.diasrestantes(cliente.getId()) < 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/categorias/categorias-main";
             }
         } else {
             r = "redirect:/index";
@@ -818,7 +818,7 @@ public class ClienteController {
                 model.addAttribute("id",cliente.getId());
                 control = true;
                 if (!control) continue;
-                r = this.clienteRepository.diasrestantes(cliente.getId()) <= 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/avaliacoes/avaliacoes-main";
+                r = this.clienteRepository.diasrestantes(cliente.getId()) < 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/avaliacoes/avaliacoes-main";
             }
         } else {
             r = "redirect:/index";
@@ -903,7 +903,7 @@ public class ClienteController {
                 model.addAttribute("dias", (Object)this.clienteRepository.diasrestantes(cliente.getId()));
                 control = true;
                 if (!control) continue;
-                r = this.clienteRepository.diasrestantes(cliente.getId()) <= 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/definicoes-gerais/definicoes";
+                r = this.clienteRepository.diasrestantes(cliente.getId()) < 0 ? "redirect:/cliente/definicoes-gerais/escolher-pacote" : "/cliente/definicoes-gerais/definicoes";
             }
         } else {
             r = "redirect:/index";
@@ -1061,7 +1061,7 @@ public class ClienteController {
         for (Cliente cliente : this.clienteRepository.vertodos12()) {
             if (this.clienteRepository.diasrestantes(cliente.getId()) > 0) {
                 cliente.setEstado("Pago");
-            } else if (this.clienteRepository.diasrestantes(cliente.getId()) <= 0) {
+            } else if (this.clienteRepository.diasrestantes(cliente.getId()) < 0) {
                 cliente.setEstado("Não pago");
             }
             this.clienteRepository.save(cliente);
