@@ -58,51 +58,104 @@ public class ArquivoUploadController{
 	    }
 	 
 
-	 public String singleFileUpload (HttpServletRequest request,MultipartFile file, String pasta) {
-	        String novoNome="sem-foto.png";
-	        if(!(file.isEmpty())) {
-	        try {
-	             String realPathtoUploads =  request.getServletContext().getRealPath("upload/");
-	             novoNome = new Date().getTime() +file.getOriginalFilename().substring(file.getOriginalFilename().length()-5);
-	             //novoNome = new Date().getTime() +file.getOriginalFilename();
-	             //novoNome = file.getOriginalFilename();
-	             novoNome = novoNome.replace(")","");
-	             
-	             System.out.println(realPathtoUploads+"--"+novoNome);
-	             String filePath = realPathtoUploads +pasta +"/"+ novoNome;
-                 File dest = new File(filePath);
-                 file.transferTo(dest);
-                
-                
-                 BufferedImage image = ImageIO.read(new File(filePath));
-
-                 OutputStream os =new FileOutputStream(filePath);
-
-                 Iterator<ImageWriter>writers = ImageIO.getImageWritersByFormatName("jpg");
-                 ImageWriter writer = (ImageWriter) writers.next();
-
-                 ImageOutputStream ios = ImageIO.createImageOutputStream(os);
-                 writer.setOutput(ios);
-
-                 ImageWriteParam param = writer.getDefaultWriteParam();
-                
-                 param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                 param.setCompressionQuality(0.2f);
-                 writer.write(null, new IIOImage(image, null, null), param);
-                
-                 os.close();
-                 ios.close();
-                 writer.dispose();
-	            } catch (IOException e) {
-	                
-	                System.out.println("ERRO DE UPLOADS: "+ e.getMessage());
-	            }}
-	         return novoNome;  
-
-	    }
+//	 public String singleFileUpload (HttpServletRequest request,MultipartFile file, String pasta) {
+//	        String novoNome="sem-foto.png";
+//	        if(!(file.isEmpty())) {
+//	        try {
+//	             String realPathtoUploads =  request.getServletContext().getRealPath("upload/");
+//	             novoNome = new Date().getTime() +file.getOriginalFilename().substring(file.getOriginalFilename().length()-5);
+//	             //novoNome = new Date().getTime() +file.getOriginalFilename();
+//	             //novoNome = file.getOriginalFilename();
+//	             novoNome = novoNome.replace(")","");
+//	             
+//	             System.out.println(realPathtoUploads+"--"+novoNome);
+//	             String filePath = realPathtoUploads +pasta +"/"+ novoNome;
+//                 File dest = new File(filePath);
+//                 file.transferTo(dest);
+//                
+//                
+//                 BufferedImage image = ImageIO.read(new File(filePath));
+//
+//                 OutputStream os =new FileOutputStream(filePath);
+//
+//                 Iterator<ImageWriter>writers = ImageIO.getImageWritersByFormatName("jpg");
+//                 ImageWriter writer = (ImageWriter) writers.next();
+//
+//                 ImageOutputStream ios = ImageIO.createImageOutputStream(os);
+//                 writer.setOutput(ios);
+//
+//                 ImageWriteParam param = writer.getDefaultWriteParam();
+//                
+//                 param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+//                 param.setCompressionQuality(0.2f);
+//                 writer.write(null, new IIOImage(image, null, null), param);
+//                
+//                 os.close();
+//                 ios.close();
+//                 writer.dispose();
+//	            } catch (IOException e) {
+//	                
+//	                System.out.println("ERRO DE UPLOADS: "+ e.getMessage());
+//	            }}
+//	         return novoNome;  
+//
+//	    }
 
 	 
-	 
+	 public String singleFileUpload(HttpServletRequest request, MultipartFile file, String pasta) {
+		    String novoNome = "sem-foto.png";
+		    if (!file.isEmpty()) {
+		        try {
+		            String realPathtoUploads = request.getServletContext().getRealPath("upload/");
+		            String originalFilename = file.getOriginalFilename();
+		            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
+
+		            // Define um novo nome para o ficheiro
+		            novoNome = new Date().getTime() + "." + fileExtension;
+		            novoNome = novoNome.replace(")", "");
+
+		            System.out.println(realPathtoUploads + "--" + novoNome);
+		            String filePath = realPathtoUploads + pasta + "/" + novoNome;
+		            File dest = new File(filePath);
+		            file.transferTo(dest);
+
+		            // Processar apenas se for uma imagem suportada
+		            if (fileExtension.matches("jpg|jpeg|png|gif")) {
+		                BufferedImage image = ImageIO.read(new File(filePath));
+		                if (image != null) {
+		                    OutputStream os = new FileOutputStream(filePath);
+
+		                    Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(fileExtension);
+		                    if (writers.hasNext()) {
+		                        ImageWriter writer = writers.next();
+
+		                        ImageOutputStream ios = ImageIO.createImageOutputStream(os);
+		                        writer.setOutput(ios);
+
+		                        ImageWriteParam param = writer.getDefaultWriteParam();
+		                        if (param.canWriteCompressed()) {
+		                            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		                            param.setCompressionQuality(0.8f); // Ajusta a qualidade de compressão
+		                        }
+		                        writer.write(null, new IIOImage(image, null, null), param);
+
+		                        os.close();
+		                        ios.close();
+		                        writer.dispose();
+		                    } else {
+		                        System.out.println("Formato de imagem não suportado: " + fileExtension);
+		                    }
+		                }
+		            } else {
+		                System.out.println("Ficheiro não é uma imagem, mas foi guardado: " + fileExtension);
+		            }
+		        } catch (IOException e) {
+		            System.out.println("ERRO DE UPLOADS: " + e.getMessage());
+		        }
+		    }
+		    return novoNome;
+		}
+
 	 
 //	 public String singleFileUpload (HttpServletRequest request,MultipartFile file, String pasta) {
 //	        String novoNome="sem-foto.png";

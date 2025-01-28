@@ -130,6 +130,42 @@
 	 });
 	function preview_image(event)
 	{
+		
+		let fire = event.target.files[0]
+		console.log(fire)
+		
+		let r = ((fire.size)/1000000).toFixed(1)
+		//console.log(fire)
+		
+		const mimeTypesPermitidos = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/bmp",
+        "image/x-icon",
+        "image/vnd.microsoft.icon",
+        "image/tiff",
+        "image/heif",
+        "image/heic"
+    ];
+		
+		if(r>100){
+			Swal.fire({
+		        title: "Alerta!",
+		        text: "Ficheiro com tamanho superior a 50 MB",
+		        icon: "warning"
+		      })
+			
+		}else if ( !mimeTypesPermitidos.includes(fire.type)  ){
+			Swal.fire({
+		        title: "Alerta!",
+		        text: "Formato do ficheiro não suportado !!",
+		        icon: "warning"
+		      })
+			
+		}else{
+		
 	document.getElementById("image1").innerHTML = "<div class='photo-contain'><img style='max-width: 100%; max-height: 100%; display: block;' id='output_image'></div>";
 	var reader = new FileReader();
 	reader.onload = function(){
@@ -147,6 +183,7 @@
 	reader.readAsDataURL(event.target.files[0]);
 	}
 	
+	}
 	
 	
 	$(document).ready(function() {
