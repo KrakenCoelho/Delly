@@ -260,7 +260,7 @@ nav1 {
 					<div class="loading-circle"  ></div>
 				</div>
 
-				<a th:each="r:${clientes}" th:with="de=${T(ao.dely.controller.ArquivoUploadController).Codifica(r[0])}"   class="page_link minhas_marcacoes w-inline-block">
+				<a th:each="r:${clientes}" th:attr="attr=${r[0]}" th:with="de=${T(ao.dely.controller.ArquivoUploadController).Codifica(r[0])}"   class="page_link minhas_marcacoes w-inline-block">
           <div class="page_link_text_wrapper">
             <div class="text-reclamacao">
               <div class="date">Nome:</div>
@@ -280,6 +280,10 @@ nav1 {
              <input th:if="${r[5]}!='1'"  type="checkbox" th:id="'sp'+${r[0]}" name="checkbox" data-name="Checkbox" class="w-checkbox-input">
           <span class="date dark" for="checkbox" style="color:black" >Exibir na Landing page</span></label>
            </div>
+             <div class="text-reclamacao" style="display:none;" th:id="'luta'+${r[0]}">
+              <div class="date">Senha:</div>
+              <div class="date dark"  th:text="${r[6]}" >Quarta-feira, 12 Maio 2021</div>
+            </div>
           </div>
           <div  th:id="'luca'+${r[0]}" style="display:none;" >
           <div>
@@ -382,7 +386,15 @@ nav1 {
   });
   
   
-  
+  document.querySelectorAll('.page_link').forEach(function(element) {
+      element.addEventListener('click', function(event) {
+          if (event.ctrlKey) {
+              const id = element.getAttribute('attr');
+            // alert("foi");
+              $("#luta"+id).fadeIn(1000).show();
+          }
+      });
+  });
   
 //   let timerInterval;
 //   Swal.fire({
@@ -462,88 +474,171 @@ nav1 {
 	$('#search').keyup(function(){filtro()})
 	
 	
-	function filtro(){
+	function filtro() {
+    var search = document.getElementById("search").value;
+    var exibidos = document.getElementById("exibido").value;
+    var estado = document.getElementById("estado").value;
+
+    var htmle = "";
+    var url = "/clientesprocurar/";
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { 'search': search, 'exibidos': exibidos, 'estado': estado },
+        success: function(data) {
+            if (data.length > 0) {
+                $(data).each(function(i, cliente) {
+                    var re = window.btoa(cliente.id);
+                    var dataSub = cliente.data_sub;
+                    var partesData = dataSub.split('-');
+                    var dataFormatada = partesData[2] + '/' + partesData[1] + '/' + partesData[0];
+
+                    htmle += '<a class="page_link minhas_marcacoes w-inline-block" attr="' + cliente.id + '">' +
+                        '<div class="page_link_text_wrapper">' +
+                        '<div class="text-reclamacao">' +
+                        '<div class="date">Nome:</div>' +
+                        '<div class="date dark">' + cliente.nome + ' (' + cliente.telefone + ')</div>' +
+                        '</div>' +
+                        '<div class="text-reclamacao">' +
+                        '<div class="date">Estado:</div>' +
+                        (cliente.estado === 'Pago' ? '<div class="date dark" Style="color:green">Pago</div>' : '') +
+                        (cliente.estado === 'Não pago' ? '<div class="date dark" Style="color:red">Não pago</div>' : '') +
+                        '</div>' +
+                        '<div class="text-reclamacao">' +
+                        '<div class="date">Data:</div>' +
+                        '<div class="date dark">' + dataFormatada + '</div>' +
+                        '</div>' +
+                        '<div class="text-reclamacao" onclick="Edvania(' + cliente.id + ')">' +
+                        (cliente.selecinadoparceiro === '1' ? '<input checked type="checkbox" id="sp' + cliente.id + '" name="checkbox" data-name="Checkbox" class="w-checkbox-input">' : '') +
+                        (cliente.selecinadoparceiro != '1' ? '<input type="checkbox" id="sp' + cliente.id + '" name="checkbox" data-name="Checkbox" class="w-checkbox-input">' : '') +
+                        '<span class="date dark" for="checkbox" style="color:black">Exibir na Landing page</span></label>' +
+                        '</div>' +
+                        '<div class="text-reclamacao" id="luta' + cliente.id + '" style="display:none;">' +
+                        '<div class="date">Senha:</div>' +
+                        '<div class="date dark">' + cliente.palavrapasse + '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div id="luca' + cliente.id + '" style="display:none;">' +
+                        '<input id="dt' + cliente.id + '" value="' + cliente.data_sub + '" type="date" class="text-field-4 w-input" name="dt">' +
+                        '<button onclick="dat(\'' + re + '\')" class="button-green">Salvar</button>' +
+                        '</div>' +
+                        '<button id="a' + cliente.id + '" onclick="dias(\'' + cliente.id + '\')" class="button-red">+ dias</button>' +
+                        '<button id="b' + cliente.id + '" onclick="pay(\'' + re + '\')" class="button-blue">Validar</button>' +
+                        '<button class="button-green" id="c' + cliente.id + '" onclick="menu(\'' + re + '\')">Menu</button>' +
+                        '</a>';
+                });
+
+                $('#evx').html(htmle);
+
+                // Add event listeners to the dynamically generated elements
+                document.querySelectorAll('.page_link').forEach(function(element) {
+                    element.addEventListener('click', function(event) {
+                        if (event.ctrlKey) {
+                            const id = element.getAttribute('attr');
+                            $("#luta" + id).fadeIn(1000).show();
+                        }
+                    });
+                });
+
+            } else {
+                $('#evx').html('<div class="card-item-2 name">' +
+                    '<div class="text-block">Sem Registro</div>' +
+                    '</div>');
+            }
+        }
+    });
+}
+	
+	
+// 	function filtro(){
 	
 		
 		
-	var search = document.getElementById("search").value
-	var exibidos = document.getElementById("exibido").value
-	var estado = document.getElementById("estado").value
+// 	var search = document.getElementById("search").value
+// 	var exibidos = document.getElementById("exibido").value
+// 	var estado = document.getElementById("estado").value
 
 	
-	var htmle = ""
-	 var url = "/clientesprocurar/";
-	 $.ajax({
-     type: "POST",
-     url: url,
-     data: {'search':search,'exibidos':exibidos,'estado':estado},
-     success: function(data){
+// 	var htmle = ""
+// 	 var url = "/clientesprocurar/";
+// 	 $.ajax({
+//      type: "POST",
+//      url: url,
+//      data: {'search':search,'exibidos':exibidos,'estado':estado},
+//      success: function(data){
   	   						
     	 					
     	 
     	 
-  	   		if(data.length>0){
-  	     	   $(data).each(function(i, cliente){
+//   	   		if(data.length>0){
+//   	     	   $(data).each(function(i, cliente){
   	     		 
-  	     		  var re = window.btoa(cliente.id);
-  	     		  //var ima = "/upload/evento/"+evento[1]
+//   	     		  var re = window.btoa(cliente.id);
+//   	     		  //var ima = "/upload/evento/"+evento[1]
   	     		  
-  	     		  var dataSub = cliente.data_sub;
-				  var partesData = dataSub.split('-');
-				  var dataFormatada = partesData[2] + '/' + partesData[1] + '/' + partesData[0];
+//   	     		  var dataSub = cliente.data_sub;
+// 				  var partesData = dataSub.split('-');
+// 				  var dataFormatada = partesData[2] + '/' + partesData[1] + '/' + partesData[0];
 					
-					htmle += '<a class="page_link minhas_marcacoes w-inline-block">'+
-                             '<div class="page_link_text_wrapper">'+
-                             '<div class="text-reclamacao">'+
-                             '<div class="date">Nome:</div>'+
-                             '<div class="date dark"  >'+cliente.nome+' ('+cliente.telefone+')</div>'+
-            			     '</div>'+
-            				 '<div class="text-reclamacao">'+
-              			     '<div class="date">Estado:</div>'+
-              				 (cliente.estado==='Pago'?'<div class="date dark" Style="color:green"   >Pago</div>':'' )+
-              				 (cliente.estado==='Não pago'?'<div class="date dark" Style="color:red"   >Não pago</div>':'' )+
-            				 '</div>'+
-            				 '<div class="text-reclamacao">'+
-              				 '<div class="date">Data:</div>'+
-                             '<div class="date dark"  >'+dataFormatada+'</div>'+
-                             '</div>'+
-                             '<div class="text-reclamacao"   onclick="Edvania('+cliente.id+')" >'+
-                             (cliente.selecinadoparceiro==='1'?'<input  checked type="checkbox" id="sp'+cliente.id+'" name="checkbox" data-name="Checkbox" class="w-checkbox-input">':'')+
-                             (cliente.selecinadoparceiro!='1' ?'<input   type="checkbox" id="sp'+cliente.id+'" name="checkbox" data-name="Checkbox" class="w-checkbox-input">':'')+
-                             '<span class="date dark" for="checkbox" style="color:black" >Exibir na Landing page</span></label>'+
-                             '</div>'+
-                             '</div>'+
-                           //  '<form action="/val/'+re+'" id="luca'+cliente.id+'" style="display:none;" method="POST" >'
-                             '<div  id="luca'+cliente.id+'" style="display:none;"  >'+
-                             '<input id="dt'+cliente.id+'"  value="'+cliente.data_sub+'" type="date" class="text-field-4 w-input" name="dt">'+
-                             ' <button onclick="dat(\'' + re + '\')" class="button-green" >Salvar</button>'+
-                             '</div>'+
-                             //'</form>'+
-                              '<button id="a'+cliente.id+'" onclick="dias(\'' + cliente.id + '\')" class="button-red">+ dias</button>' +
-					    	  '<button id="b'+cliente.id+'" onclick="pay(\'' + re + '\')" class="button-blue">Validar</button>'  +
-               				 '<button class="button-green" id="c'+cliente.id+'" onclick="menu(\'' + re + '\')">Menu</button>' +
-							 '</a>';
+// 					htmle += '<a class="page_link minhas_marcacoes w-inline-block" attr="'+cliente.id+'" >'+
+//                              '<div class="page_link_text_wrapper">'+
+//                              '<div class="text-reclamacao">'+
+//                              '<div class="date">Nome:</div>'+
+//                              '<div class="date dark"  >'+cliente.nome+' ('+cliente.telefone+')</div>'+
+//             			     '</div>'+
+//             				 '<div class="text-reclamacao">'+
+//               			     '<div class="date">Estado:</div>'+
+//               				 (cliente.estado==='Pago'?'<div class="date dark" Style="color:green"   >Pago</div>':'' )+
+//               				 (cliente.estado==='Não pago'?'<div class="date dark" Style="color:red"   >Não pago</div>':'' )+
+//             				 '</div>'+
+//             				 '<div class="text-reclamacao">'+
+//               				 '<div class="date">Data:</div>'+
+//                              '<div class="date dark"  >'+dataFormatada+'</div>'+
+//                              '</div>'+
+//                              '<div class="text-reclamacao"   onclick="Edvania('+cliente.id+')" >'+
+//                              (cliente.selecinadoparceiro==='1'?'<input  checked type="checkbox" id="sp'+cliente.id+'" name="checkbox" data-name="Checkbox" class="w-checkbox-input">':'')+
+//                              (cliente.selecinadoparceiro!='1' ?'<input   type="checkbox" id="sp'+cliente.id+'" name="checkbox" data-name="Checkbox" class="w-checkbox-input">':'')+
+//                              '<span class="date dark" for="checkbox" style="color:black" >Exibir na Landing page</span></label>'+
+//                              '</div>'+
+//                              '<div class="text-reclamacao"  id="luta'+cliente.id+'" style="display:none;" >'+
+//               				 '<div class="date">Senha:</div>'+
+//                              '<div class="date dark"  >'+cliente.palavrapasse+'</div>'+
+//                              '</div>'+
+//                              '</div>'+
+//                            //  '<form action="/val/'+re+'" id="luca'+cliente.id+'" style="display:none;" method="POST" >'
+//                              '<div  id="luca'+cliente.id+'" style="display:none;"  >'+
+//                              '<input id="dt'+cliente.id+'"  value="'+cliente.data_sub+'" type="date" class="text-field-4 w-input" name="dt">'+
+//                              ' <button onclick="dat(\'' + re + '\')" class="button-green" >Salvar</button>'+
+//                              '</div>'+
+//                              //'</form>'+
+//                               '<button id="a'+cliente.id+'" onclick="dias(\'' + cliente.id + '\')" class="button-red">+ dias</button>' +
+// 					    	  '<button id="b'+cliente.id+'" onclick="pay(\'' + re + '\')" class="button-blue">Validar</button>'  +
+//                				 '<button class="button-green" id="c'+cliente.id+'" onclick="menu(\'' + re + '\')">Menu</button>' +
+// 							 '</a>';
 			        		 
 			        		 
 			        		 
 			        		 
-			        $('#evx').html(htmle);  	
-	
+// 			        $('#evx').html(htmle);  	
+					
+			        
+			        
+			        
   	     
-  	    	   });}else{$('#evx').html('<div class="card-item-2 name">'+
-   	                     '<div class="text-block" >Sem Registro</div>'+
-	                     '</div>')
-	    	   }
+//   	    	   });}else{$('#evx').html('<div class="card-item-2 name">'+
+//    	                     '<div class="text-block" >Sem Registro</div>'+
+// 	                     '</div>')
+// 	    	   }
   	     	 
   	       
-  	        }
+//   	        }
   	        
   	        
-  	    });
+//   	    });
   	 
   
 
-  }
+//   }
   
 	
 // 	function filtro() {

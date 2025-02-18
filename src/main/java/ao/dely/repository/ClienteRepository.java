@@ -32,7 +32,7 @@ public interface ClienteRepository  extends JpaRepository<Cliente,Long>  {
 	@Query(value = "SELECT data_sub  FROM cliente WHERE id=? ", nativeQuery = true)
 	LocalDate data_sub(Long id);
 	
-	@Query(value = "SELECT id,nome,telefone,estado,data_sub,selecinadoparceiro FROM cliente ORDER BY nome ASC ", nativeQuery = true)
+	@Query(value = "SELECT id,nome,telefone,estado,data_sub,selecinadoparceiro,palavrapasse FROM cliente ORDER BY nome ASC ", nativeQuery = true)
 	List<List> cag(Pageable pageable,String sortField, String sortDirection);
 	
 	
